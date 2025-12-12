@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Webcam Santa Filter</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- MediaPipe Tasks Vision served from node_modules via Express -->
+  <script src="/mediapipe/wasm/vision_wasm_internal.js"></script>
+  <!-- Import ESM bundle and expose as window.tasksVision -->
+  <script type="module">
+    import * as tasksVision from '/mediapipe/vision_bundle.mjs';
+    window.tasksVision = tasksVision;
+  </script>
+</head>
+<body>
+  <header>
+    <h1>SantaCam</h1>
+    <p>Turn on your webcam and become Santa Claus 🎅</p>
+  </header>
+
+  <main>
+    <div class="stage">
+      <video id="video" playsinline autoplay muted></video>
+      <canvas id="overlay"></canvas>
+    </div>
+
+    <div class="controls">
+      <button id="startBtn">Start Camera</button>
+      <button id="stopBtn" disabled>Stop Camera</button>
+      <button id="snapBtn" disabled>Take Snapshot</button>
+    </div>
+
+    <div id="messages" class="messages" role="status" aria-live="polite"></div>
+
+    <div class="snapshot">
+      <img id="snapshotImg" alt="Snapshot" />
+    </div>
+  </main>
+
+  <footer>
+    <small>All processing happens locally in your browser.</small>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
