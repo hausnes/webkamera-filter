@@ -5,12 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Webcam Santa Filter</title>
   <link rel="stylesheet" href="styles.css" />
-  <!-- MediaPipe Tasks Vision served from node_modules via Express -->
-  <script src="/mediapipe/wasm/vision_wasm_internal.js"></script>
-  <!-- Import ESM bundle and expose as window.tasksVision -->
-  <script type="module">
-    import * as tasksVision from '/mediapipe/vision_bundle.mjs';
-    window.tasksVision = tasksVision;
+  <!-- three.js and MediaPipe Tasks Vision are served from node_modules via Express -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "/three/three.module.js",
+        "three/addons/": "/three/addons/",
+        "@mediapipe/tasks-vision": "/mediapipe/vision_bundle.mjs"
+      }
+    }
   </script>
 </head>
 <body>
@@ -20,7 +23,8 @@
   </header>
 
   <main>
-    <div class="stage">
+    <div class="stage" id="stage">
+      <!-- The video is only a frame source; everything is composited in WebGL on the canvas -->
       <video id="video" playsinline autoplay muted></video>
       <canvas id="overlay"></canvas>
     </div>
@@ -29,6 +33,7 @@
       <button id="startBtn">Start Camera</button>
       <button id="stopBtn" disabled>Stop Camera</button>
       <button id="snapBtn" disabled>Take Snapshot</button>
+      <label class="toggle"><input type="checkbox" id="snowToggle" checked /> Snow</label>
     </div>
 
     <div id="messages" class="messages" role="status" aria-live="polite"></div>
@@ -42,6 +47,6 @@
     <small>All processing happens locally in your browser.</small>
   </footer>
 
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>

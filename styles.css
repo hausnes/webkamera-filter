@@ -24,7 +24,7 @@ main { max-width: 900px; margin: 0 auto; padding: 16px; }
   position: relative;
   width: 100%;
   max-width: 900px;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: var(--video-aspect, 16 / 9);
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0,0,0,0.35);
@@ -37,6 +37,12 @@ video, canvas {
   width: 100%;
   height: 100%;
 }
+
+/* The canvas shows the composited frame; the raw video stays hidden underneath */
+video { opacity: 0; }
+
+/* Mirror the preview like a selfie camera (snapshots are mirrored to match) */
+canvas { transform: scaleX(-1); }
 
 .controls {
   display: flex;
@@ -62,6 +68,15 @@ button {
 button:hover { filter: brightness(1.1); }
 button:disabled { opacity: 0.5; cursor: not-allowed; }
 #startBtn { background: var(--accent); }
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-weight: 600;
+  cursor: pointer;
+}
 
 .messages { text-align: center; color: var(--muted); min-height: 24px; }
 .snapshot { text-align: center; padding: 12px; }
